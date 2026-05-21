@@ -22,12 +22,9 @@ program-options
 constraints:
   -- Versions before this don’t support plugin options.
   no-recursion >= 0.2.0.0,
-  tasty-hunit >= 0.10,
 
 tests: True
 
 packages:
-  ./calendrical/calendrical.cabal
-  ./mixed-radix/mixed-radix.cabal
-  ./numeric-tangle/numeric-tangle.cabal
-  ./numeric-tangle-fin/numeric-tangle-fin.cabal
+  ./core/numeric-tangle.cabal
+  ./fin/numeric-tangle-fin.cabal

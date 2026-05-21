@@ -1,24 +1,17 @@
-# calendrical
+# Numeric Tangle
 
-[![built with garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fsellout%2Fcalendrical)](https://garnix.io/repo/sellout/calendrical)
-[![GitHub CI](https://github.com/sellout/calendrical/actions/workflows/build.yml/badge.svg)](https://github.com/sellout/calendrical/actions/workflows/build.yml)
-[![Nix CI](https://nix-ci.com/badge/gh:sellout:calendrical)](https://nix-ci.com/gh:sellout:calendrical)
+[![built with garnix](https://img.shields.io/endpoint?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fsellout%2Fnumeric-tangle)](https://garnix.io/repo/sellout/numeric-tangle)
+[![GitHub CI](https://github.com/sellout/numeric-tangle/actions/workflows/build.yml/badge.svg)](https://github.com/sellout/numeric-tangle/actions/workflows/build.yml)
+[![Nix CI](https://nix-ci.com/badge/gh:sellout:numeric-tangle)](https://nix-ci.com/gh:sellout:numeric-tangle)
 [![Project Manager](https://img.shields.io/badge/%20-Project%20Manager-%235277C3?logo=nixos&labelColor=%23cccccc)](https://sellout.github.io/project-manager/)
 
-Comprehensive date & time library
+A play on Scheme’s numerical tower, for Haskell
 
-An implementation of many calendaring and time systems, based on the book [_Calendrical Calculations_](https://www.cs.tau.ac.il/~nachum/calendar-book/index.shtml).
-
-The book provides a lot of mathematical functions and includes a Common Lisp implementation, but there are various changes made for the Haskell version:
-
-- **static typing** – The book attempts to specify types for all of its functions, but as they’re nothing more than comments, they’re helpful, but incomplete and inconsistent. For example, `angle` is used to describe both a real-valued number of degrees and a degree/minute/second triple. Many of the functions in the book also rely on dynamic typing, and so specific types must be chosen for the Haskell implementation. It’s not always obvious which types are appropriate where. For example, the `epoch` of a `Calendar` is generally an integral value, but for Julian days, it’s a float. The Lisp implementation needs make no distinction between these, but the book generally distinguishes between integral “RD” and fractional “moments” … except in this one case.
-- **eliminating magic numbers** – Much of the book assumes a seven-day week, and so various functions hard-code values around that range.
-- **calendar “types”** – The book will sometimes define one calendar, then define others in reference to it (for example, the Armenian calendar is the same as the Egyptian calendar, but with a later `epoch`). This is much like a JavaScript-y prototype system, where a new instance is defined by how it differs from some other instance. Instead, the Haskell implementation extracts these commonalities into calendar “types”, which are then used to instantiate multiple calendars independently from one another. These generalizations can also be useful when developing new calendars.
-- **gratuitous macros** – Many of the macros in the CL implementation are purely esthetic, and are simply rewritten as functions with the same name.
+Haskell type classes for more precise numerical operations.
 
 ## usage
 
-See [the package README](./calendrical/README.md) for usage information.
+See [the package README](./core/README.md) for usage information.
 
 ## building
 

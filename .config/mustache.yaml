@@ -1,10 +1,10 @@
 {
   project:
     {
-      description: "An implementation of many calendaring and time systems, based on the book “Calendrical Calculations”.",
-      name: "calendrical",
-      repo: "sellout/calendrical",
-      summary: "Comprehensive date & time library",
+      description: "Haskell type classes for more precise numerical operations.",
+      name: "numeric-tangle",
+      repo: "sellout/numeric-tangle",
+      summary: "A play on Scheme’s numerical tower, for Haskell",
     },
   type: { name: "haskell" },
 }

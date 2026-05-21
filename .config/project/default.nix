@@ -58,10 +58,8 @@
           '';
       };
     in
-      perPackageFiles "calendrical"
-      // perPackageFiles "mixed-radix"
-      // perPackageFiles "numeric-tangle"
-      // perPackageFiles "numeric-tangle-fin";
+      perPackageFiles "core"
+      // perPackageFiles "fin";
   };
 
   imports = [./hlint.nix];
@@ -111,10 +109,8 @@
     inherit (self.lib) defaultGhcVersion;
     ghcVersions = self.lib.nonNixTestedGhcVersions;
     cabalPackages = {
-      mixed-radix = "mixed-radix";
-      numeric-tangle = "numeric-tangle";
-      numeric-tangle-fin = "numeric-tangle-fin";
-      calendrical = "calendrical";
+      numeric-tangle = "core";
+      numeric-tangle-fin = "fin";
     };
     ## Used by Nix builds, but not by GitHub.
     checkBounds.extraDependencyVersions = [
