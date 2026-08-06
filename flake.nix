@@ -1,5 +1,5 @@
 {
-  description = "Comprehensive date & time library";
+  description = "A play on Scheme’s numerical tower, for Haskell";
 
   nixConfig = {
     ## NB: This is a consequence both of the prevailing Haskell infrastructure
@@ -8,16 +8,15 @@
     ##     non-IFD Haskell infra, this will probably still need to be enabled
     ##     for the other reason.
     allow-import-from-derivation = true;
-    ## https://github.com/NixOS/rfcs/blob/master/rfcs/0045-deprecate-url-syntax.md
-    extra-experimental-features = ["no-url-literals"];
-    extra-substituters = [
-      "https://cache.garnix.io"
-      "https://sellout.cachix.org"
-    ];
+    extra-substituters = ["https://sellout.cachix.org"];
     extra-trusted-public-keys = [
-      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
       "sellout.cachix.org-1:v37cTpWBEycnYxSPAgSQ57Wiqd3wjljni2aC0Xry1DE="
     ];
+    ## WAIT: Should be `"fatal"`, but NixOS/nixpkgs#544986 and cabal2nix
+    ##       generates absolute paths into every derivation.
+    lint-absolute-path-literals = "ignore";
+    lint-short-path-literals = "fatal";
+    lint-url-literals = "fatal";
     ## Isolate the build.
     sandbox = "relaxed";
     use-registries = false;

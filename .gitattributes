@@ -1,7 +1,7 @@
 /.cache/git/config linguist-generated
 /.cache/git/hooks/pre-push linguist-generated
-/.cache/vale/Vocab/calendrical/accept.txt linguist-generated
-/.cache/vale/config/vocabularies/calendrical/accept.txt linguist-generated
+/.cache/vale/Vocab/numeric-tangle/accept.txt linguist-generated
+/.cache/vale/config/vocabularies/numeric-tangle/accept.txt linguist-generated
 /.dir-locals.el linguist-generated
 /.editorconfig linguist-generated
 /.envrc linguist-generated
@@ -25,5 +25,4 @@
 /fin/LICENSE.Universal-FOSS-exception-1.0 linguist-generated
 /fin/LICENSE.proprietary linguist-generated
 /fin/henforcer.toml linguist-generated
-/garnix.yaml linguist-generated
 /nix-ci.nix linguist-generated

@@ -6,10 +6,10 @@ dist-newstyle
 /.cache/vale/config/*
 !/.cache/vale/config/vocabularies/
 /.cache/vale/config/vocabularies/*
-!/.cache/vale/config/vocabularies/calendrical/
+!/.cache/vale/config/vocabularies/numeric-tangle/
 !/.cache/vale/Vocab/
 /.cache/vale/Vocab/*
-!/.cache/vale/Vocab/calendrical/
+!/.cache/vale/Vocab/numeric-tangle/
 /.local/state/project-manager/
 /.local/state/nix/profiles/
 /.cache/direnv/

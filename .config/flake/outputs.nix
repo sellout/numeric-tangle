@@ -22,7 +22,7 @@
   self,
   systems,
 }: let
-  pname = "calendrical";
+  pname = "numeric-tangle";
 
   supportedSystems = import systems;
 
