@@ -9,6 +9,8 @@
 -- |
 -- Copyright: 2024 Greg Pfeil
 -- License: AGPL-3.0-only WITH Universal-FOSS-exception-1.0 OR LicenseRef-commercial
+--
+-- @since 0.0.1
 module Numeric.Widen.Instances.Fin () where
 
 import "base" Data.Int (Int, Int8)
@@ -25,36 +27,69 @@ import "fin" Data.Type.Nat.LE qualified as TNat (LE)
 import "numeric-tangle" Numeric.Widen (Widen, widen)
 import "base" Prelude (Integer, fromIntegral)
 
+-- |
+--
+-- @since 0.0.1
 instance (SNatI n, TNat.LE n (TNat.FromGHC 128)) => Widen (Fin n) CChar where
   widen = fromIntegral
 
+-- |
+--
+-- @since 0.0.1
 instance (SNatI n, TNat.LE n (TNat.FromGHC 128)) => Widen (Fin n) CSChar where
   widen = fromIntegral
 
+-- |
+--
+-- @since 0.0.1
 instance (SNatI n, TNat.LE n (TNat.FromGHC 256)) => Widen (Fin n) CUChar where
   widen = fromIntegral
 
+-- |
+--
+-- @since 0.0.1
 instance (SNatI n, TNat.LE n (TNat.FromGHC 128)) => Widen (Fin n) Int8 where
   widen = fromIntegral
 
+-- |
+--
+-- @since 0.0.1
 instance (SNatI n, TNat.LE (TNat.FromGHC 128) n) => Widen Int8 (Fin n) where
   widen = fromIntegral
 
+-- |
+--
+-- @since 0.0.1
 instance (SNatI n, TNat.LE n (TNat.FromGHC 256)) => Widen (Fin n) Word8 where
   widen = fromIntegral
 
+-- |
+--
+-- @since 0.0.1
 instance (SNatI n, TNat.LE (TNat.FromGHC 256) n) => Widen Word8 (Fin n) where
   widen = fromIntegral
 
+-- |
+--
+-- @since 0.0.1
 instance Widen (Fin n) Natural where
   widen = Fin.toNatural
 
+-- |
+--
+-- @since 0.0.1
 instance Widen (Fin n) Nat where
   widen = Fin.toNat
 
+-- |
+--
+-- @since 0.0.1
 instance Widen Nat Natural where
   widen = Nat.toNatural
 
+-- |
+--
+-- @since 0.0.1
 instance Widen Natural Nat where
   widen = Nat.fromNatural
 
@@ -64,14 +99,22 @@ instance Widen Natural Nat where
 --
 --  __FIXME__: This bound is too low, but if it’s too big, we get a stack
 --             overflow.
+--
+-- @since 0.0.1
 instance
   (SNatI n, TNat.LE n (TNat.FromGHC 1024 {- 536870911 -})) =>
   Widen (Fin n) Int
   where
   widen = fromIntegral
 
+-- |
+--
+-- @since 0.0.1
 instance (SNatI n) => Widen (Fin n) Integer where
   widen = fromIntegral
 
+-- |
+--
+-- @since 0.0.1
 instance Widen Nat Integer where
   widen = fromIntegral

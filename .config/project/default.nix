@@ -21,9 +21,7 @@
         "${dir}/LICENSE.Universal-FOSS-exception-1.0".source =
           ../../LICENSE.Universal-FOSS-exception-1.0;
         "${dir}/LICENSE.proprietary".source = ../../LICENSE.proprietary;
-        ## We might want to put this somewhere else (like .config/henforcer/),
-        ## but that isn’t currently an option, because of flipstone/henforcer#7.
-        "${dir}/henforcer.toml".text =
+        "${dir}/.config/henforcer.toml".text =
           lib.pm.generators.toTOML {} {
             globalSection = {};
             sections = {

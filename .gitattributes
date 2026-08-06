@@ -15,14 +15,14 @@
 /.gitignore linguist-generated
 /.hlint.yaml linguist-generated
 /.vale.ini linguist-generated
+/core/.config/henforcer.toml linguist-generated
 /core/LICENSE linguist-generated
 /core/LICENSE.AGPL-3.0-only linguist-generated
 /core/LICENSE.Universal-FOSS-exception-1.0 linguist-generated
 /core/LICENSE.proprietary linguist-generated
-/core/henforcer.toml linguist-generated
+/fin/.config/henforcer.toml linguist-generated
 /fin/LICENSE linguist-generated
 /fin/LICENSE.AGPL-3.0-only linguist-generated
 /fin/LICENSE.Universal-FOSS-exception-1.0 linguist-generated
 /fin/LICENSE.proprietary linguist-generated
-/fin/henforcer.toml linguist-generated
 /nix-ci.nix linguist-generated

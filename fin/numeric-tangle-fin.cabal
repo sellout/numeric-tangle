@@ -155,12 +155,12 @@ common defaults
       no-recursion ^>= {0.2.0, 0.3.0, 0.4.0},
     ghc-options:
       -fplugin NoRecursion
-    -- TODO: Re-enable and address complaits
-    -- if impl(ghc >= 9.4.5)
-    --   build-depends:
-    --     henforcer ^>= {1.0.0},
-    --   ghc-options:
-    --     -fplugin Henforcer
+    if impl(ghc >= 9.4.5)
+      build-depends:
+        henforcer ^>= {1.0.0},
+      ghc-options:
+        -fplugin Henforcer
+        -fplugin-opt Henforcer:--config=.config/henforcer.toml
 
 library
   import: defaults
