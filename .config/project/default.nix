@@ -7,8 +7,8 @@
   ...
 }: {
   project = {
-    name = "calendrical";
-    summary = "Comprehensive date & time library";
+    name = "numeric-tangle";
+    summary = "A play on Scheme’s numerical tower, for Haskell";
     file = let
       ## Cabal requires many files to exist at the package level, rather than
       ## the repo level. This makes copies of the individual files into the
@@ -21,9 +21,7 @@
         "${dir}/LICENSE.Universal-FOSS-exception-1.0".source =
           ../../LICENSE.Universal-FOSS-exception-1.0;
         "${dir}/LICENSE.proprietary".source = ../../LICENSE.proprietary;
-        ## We might want to put this somewhere else (like .config/henforcer/),
-        ## but that isn’t currently an option, because of flipstone/henforcer#7.
-        "${dir}/henforcer.toml".text =
+        "${dir}/.config/henforcer.toml".text =
           lib.pm.generators.toTOML {} {
             globalSection = {};
             sections = {
@@ -70,7 +68,6 @@
   services.github.settings.branches.main.protection.required_status_checks.contexts =
     lib.mkForce
     ([
-        "All Garnix checks"
         "check-bounds"
         "check-licenses"
       ]
@@ -134,5 +131,6 @@
   };
 
   ## publishing
+  services.github.settings.repository.private = false;
   services.github.settings.repository.topics = ["calendar" "date"];
 }

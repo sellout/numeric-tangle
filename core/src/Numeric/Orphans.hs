@@ -12,6 +12,8 @@
 -- License: AGPL-3.0-only WITH Universal-FOSS-exception-1.0 OR LicenseRef-commercial
 --
 -- Adds missing numeric instances.
+--
+-- @since 0.0.1
 module Numeric.Orphans () where
 
 import "base" Control.Applicative (Applicative, liftA2, pure)
@@ -77,22 +79,46 @@ import "base" Data.Ord (Ord)
 
 -- Alt
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Bounded (f n)) => Bounded (Alt f n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Floating (f n)) => Floating (Alt f n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Fractional (f n)) => Fractional (Alt f n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Integral (f n)) => Integral (Alt f n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Real (f n)) => Real (Alt f n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFloat (f n)) => RealFloat (Alt f n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFrac (f n)) => RealFrac (Alt f n)
 
 -- Ap
 
+-- |
+--
+-- @since 0.0.1
 instance (Applicative f, Floating n) => Floating (Ap f n) where
   pi = pure pi
   exp = fmap exp
@@ -108,6 +134,9 @@ instance (Applicative f, Floating n) => Floating (Ap f n) where
   acosh = fmap acosh
   atanh = fmap atanh
 
+-- |
+--
+-- @since 0.0.1
 instance (Applicative f, Fractional n) => Fractional (Ap f n) where
   fromRational = pure . fromRational
   recip = fmap recip
@@ -116,30 +145,57 @@ instance (Applicative f, Fractional n) => Fractional (Ap f n) where
 -- Compose
 
 #if !MIN_VERSION_base(4, 19, 0)
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Bounded (f (g a))) => Bounded (Compose f g a)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Enum (f (g a))) => Enum (Compose f g a)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance
   (Ord (Compose f g a), Integral (f (g a))) =>
   Integral (Compose f g a)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Num (f (g a))) => Num (Compose f g a)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance
   (Ord (Compose f g a), Real (f (g a))) =>
   Real (Compose f g a)
 #endif
 
 #if !MIN_VERSION_base(4, 20, 0)
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Floating (f (g a))) => Floating (Compose f g a)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Fractional (f (g a))) => Fractional (Compose f g a)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance
   (Ord (Compose f g a), RealFloat (f (g a))) =>
   RealFloat (Compose f g a)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance
   (Ord (Compose f g a), RealFrac (f (g a))) =>
   RealFrac (Compose f g a)
@@ -165,6 +221,8 @@ minRealFloat a = -(maxRealFloat a)
 -- -1.7976931348623157e308
 -- >>> maxBound :: CDouble
 -- 1.7976931348623157e308
+--
+-- @since 0.0.1
 instance Bounded CDouble where
   minBound = minRealFloat 0
   maxBound = maxRealFloat 0
@@ -175,6 +233,8 @@ instance Bounded CDouble where
 -- (-1.7976931348623157e308) :+ (-1.7976931348623157e308)
 -- >>> maxBound :: Complex Double
 -- 1.7976931348623157e308 :+ 1.7976931348623157e308
+--
+-- @since 0.0.1
 instance (Bounded a) => Bounded (Complex a) where
   minBound = minBound :+ minBound
   maxBound = maxBound :+ maxBound
@@ -185,6 +245,8 @@ instance (Bounded a) => Bounded (Complex a) where
 -- -3.4028235e38
 -- >>> maxBound :: CFloat
 -- 3.4028235e38
+--
+-- @since 0.0.1
 instance Bounded CFloat where
   minBound = minRealFloat 0
   maxBound = maxRealFloat 0
@@ -195,6 +257,8 @@ instance Bounded CFloat where
 -- -1.7976931348623157e308
 -- >>> maxBound :: Double
 -- 1.7976931348623157e308
+--
+-- @since 0.0.1
 instance Bounded Double where
   minBound = minRealFloat 0
   maxBound = maxRealFloat 0
@@ -205,15 +269,23 @@ instance Bounded Double where
 -- -3.4028235e38
 -- >>> maxBound :: Float
 -- 3.4028235e38
+--
+-- @since 0.0.1
 instance Bounded Float where
   minBound = minRealFloat 0
   maxBound = maxRealFloat 0
 
 -- Down
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Bounded n, Integral n) => Integral (Down n)
 
 #if !MIN_VERSION_base(4, 18, 0)
+-- |
+--
+-- @since 0.0.1
 instance (Enum a, Bounded a, Eq a) => Enum (Down a) where
   succ = fmap pred
   pred = fmap succ
@@ -234,60 +306,138 @@ instance (Enum a, Bounded a, Eq a) => Enum (Down a) where
 
 -- Max
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Floating n) => Floating (Max n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Fractional n) => Fractional (Max n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Integral n) => Integral (Max n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Real n) => Real (Max n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFloat n) => RealFloat (Max n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFrac n) => RealFrac (Max n)
 
 -- Min
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Floating n) => Floating (Min n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Fractional n) => Fractional (Min n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Integral n) => Integral (Min n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Real n) => Real (Min n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFloat n) => RealFloat (Min n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFrac n) => RealFrac (Min n)
 
 -- Product
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Enum n) => Enum (Product n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Floating n) => Floating (Product n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Fractional n) => Fractional (Product n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Integral n) => Integral (Product n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Real n) => Real (Product n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFloat n) => RealFloat (Product n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFrac n) => RealFrac (Product n)
 
 -- Sum
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Enum n) => Enum (Sum n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Floating n) => Floating (Sum n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Fractional n) => Fractional (Sum n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Integral n) => Integral (Sum n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (Real n) => Real (Sum n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFloat n) => RealFloat (Sum n)
 
+-- |
+--
+-- @since 0.0.1
 deriving newtype instance (RealFrac n) => RealFrac (Sum n)

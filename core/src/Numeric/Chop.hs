@@ -7,6 +7,8 @@
 -- |
 -- Copyright: 2024 Greg Pfeil
 -- License: AGPL-3.0-only WITH Universal-FOSS-exception-1.0 OR LicenseRef-commercial
+--
+-- @since 0.0.1
 module Numeric.Chop
   ( Chop,
     Chopped,
@@ -62,12 +64,16 @@ import "base" Prelude qualified as Base
 --  __NB__: This is exactly `Prelude.RealFrac` with a more constrained result
 --          type. Also, `Base.properFraction` is called `mixedFraction` here,
 --          with `properFraction` being a different function.
+--
+-- @since 0.0.1
 type Chop :: Type -> Constraint
 class (Fractional a, Real a, Integral (Chopped a)) => Chop a where
   {-# MINIMAL mixedFraction | truncate, properFraction #-}
 
   -- | This type must be able to represent all integers in the range
   --   [⌊@`minBound` :: a@⌋, ⌈@`maxBound` :: a`⌉]
+  --
+  -- @since 0.0.1
   type Chopped a
 
   -- | The function `mixedFraction` takes a real fractional number @x@ and
@@ -80,16 +86,22 @@ class (Fractional a, Real a, Integral (Chopped a)) => Chop a where
   --
   --   The default definitions of the `ceiling`, `floor`, `truncate`, and
   --  `round` functions are in terms of `mixedFraction`.
+  --
+  -- @since 0.0.1
   mixedFraction :: a -> (Chopped a, a)
   mixedFraction x = (truncate x, properFraction x)
 
   -- | @`ceiling` x@ returns the least integer not less than @x@
+  --
+  -- @since 0.0.1
   ceiling :: a -> Chopped a
   ceiling x =
     let (n, r) = mixedFraction x
      in if 0 < r then n + 1 else n
 
   -- | @`floor` x@ returns the greatest integer not greater than @x@
+  --
+  -- @since 0.0.1
   floor :: a -> Chopped a
   floor x =
     let (n, r) = mixedFraction x
@@ -97,6 +109,8 @@ class (Fractional a, Real a, Integral (Chopped a)) => Chop a where
 
   -- | @`round` x@ returns the nearest integer to @x@;
   --   the even integer if @x@ is equidistant between two integers
+  --
+  -- @since 0.0.1
   round :: a -> Chopped a
   round x =
     let (n, r) = mixedFraction x
@@ -107,6 +121,8 @@ class (Fractional a, Real a, Integral (Chopped a)) => Chop a where
           GT -> m
 
   -- | @`truncate` x@ returns the integer nearest @x@ between zero and @x@.
+  --
+  -- @since 0.0.1
   truncate :: a -> Chopped a
   truncate = fst . mixedFraction
   {-# INLINE truncate #-}
@@ -114,9 +130,14 @@ class (Fractional a, Real a, Integral (Chopped a)) => Chop a where
   -- | @`properFraction` x@, unlike `Base.properFraction`, returns @x -
   --  `truncate` x@ – the proper fraction that remains when the integral
   --   component is removed.
+  --
+  -- @since 0.0.1
   properFraction :: a -> a
   properFraction = snd . mixedFraction
 
+-- |
+--
+-- @since 0.0.1
 instance (Integral a) => Chop (Ratio a) where
   type Chopped (Ratio a) = a
   ceiling = Base.ceiling
@@ -125,6 +146,9 @@ instance (Integral a) => Chop (Ratio a) where
   round = Base.round
   truncate = Base.truncate
 
+-- |
+--
+-- @since 0.0.1
 instance Chop Float where
   type Chopped Float = Integer
   ceiling = Base.ceiling
@@ -133,6 +157,9 @@ instance Chop Float where
   round = Base.round
   truncate = Base.truncate
 
+-- |
+--
+-- @since 0.0.1
 instance Chop Double where
   type Chopped Double = Integer
   ceiling = Base.ceiling
@@ -141,6 +168,9 @@ instance Chop Double where
   round = Base.round
   truncate = Base.truncate
 
+-- |
+--
+-- @since 0.0.1
 instance Chop CFloat where
   type Chopped CFloat = Integer
   ceiling = Base.ceiling
@@ -149,6 +179,9 @@ instance Chop CFloat where
   round = Base.round
   truncate = Base.truncate
 
+-- |
+--
+-- @since 0.0.1
 instance Chop CDouble where
   type Chopped CDouble = Integer
   ceiling = Base.ceiling
@@ -157,6 +190,9 @@ instance Chop CDouble where
   round = Base.round
   truncate = Base.truncate
 
+-- |
+--
+-- @since 0.0.1
 instance (HasResolution n) => Chop (Fixed n) where
   type Chopped (Fixed n) = Integer
   ceiling = Base.ceiling
@@ -165,6 +201,9 @@ instance (HasResolution n) => Chop (Fixed n) where
   round = Base.round
   truncate = Base.truncate
 
+-- |
+--
+-- @since 0.0.1
 instance (Chop (f a)) => Chop (Alt f a) where
   type Chopped (Alt f a) = Chopped (f a)
   ceiling = ceiling . getAlt
@@ -182,6 +221,9 @@ instance (Chop (f a)) => Chop (Alt f a) where
 --   round = fmap round
 --   truncate = fmap truncate
 
+-- |
+--
+-- @since 0.0.1
 instance (Ord (Compose f g a), Chop (f (g a))) => Chop (Compose f g a) where
   type Chopped (Compose f g a) = Chopped (f (g a))
   ceiling = ceiling . getCompose
@@ -194,6 +236,8 @@ instance (Ord (Compose f g a), Chop (f (g a))) => Chop (Compose f g a) where
 --
 --  __NB__: This instance doesn’t use the @`Bifunctor` `Const`@ instance,
 --          because it requires @a :: `Type`@.
+--
+-- @since 0.0.1
 instance (Chop a) => Chop (Const a b) where
   type Chopped (Const a b) = Const (Chopped a) b
   ceiling = Const . ceiling . getConst
@@ -202,6 +246,9 @@ instance (Chop a) => Chop (Const a b) where
   round = Const . round . getConst
   truncate = Const . truncate . getConst
 
+-- |
+--
+-- @since 0.0.1
 instance (Chop a, Bounded (Chopped a)) => Chop (Down a) where
   type Chopped (Down a) = Down (Chopped a)
   ceiling = fmap ceiling
@@ -210,6 +257,9 @@ instance (Chop a, Bounded (Chopped a)) => Chop (Down a) where
   round = fmap round
   truncate = fmap truncate
 
+-- |
+--
+-- @since 0.0.1
 instance (Chop a) => Chop (Identity a) where
   type Chopped (Identity a) = Identity (Chopped a)
   ceiling = fmap ceiling
@@ -218,6 +268,9 @@ instance (Chop a) => Chop (Identity a) where
   round = fmap round
   truncate = fmap truncate
 
+-- |
+--
+-- @since 0.0.1
 instance (Chop a) => Chop (Max a) where
   type Chopped (Max a) = Max (Chopped a)
   ceiling = fmap ceiling
@@ -226,6 +279,9 @@ instance (Chop a) => Chop (Max a) where
   round = fmap round
   truncate = fmap truncate
 
+-- |
+--
+-- @since 0.0.1
 instance (Chop a) => Chop (Min a) where
   type Chopped (Min a) = Min (Chopped a)
   ceiling = fmap ceiling
@@ -242,6 +298,9 @@ instance (Chop a) => Chop (Min a) where
 --   round = Op . fmap round . getOp
 --   truncate = Op . fmap truncate . getOp
 
+-- |
+--
+-- @since 0.0.1
 instance (Chop a) => Chop (Product a) where
   type Chopped (Product a) = Product (Chopped a)
   ceiling = fmap ceiling
@@ -250,6 +309,9 @@ instance (Chop a) => Chop (Product a) where
   round = fmap round
   truncate = fmap truncate
 
+-- |
+--
+-- @since 0.0.1
 instance (Chop a) => Chop (Sum a) where
   type Chopped (Sum a) = Sum (Chopped a)
   ceiling = fmap ceiling

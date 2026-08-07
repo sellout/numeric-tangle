@@ -5,6 +5,8 @@
 -- |
 -- Copyright: 2024 Greg Pfeil
 -- License: AGPL-3.0-only WITH Universal-FOSS-exception-1.0 OR LicenseRef-commercial
+--
+-- @since 0.0.1
 module Numeric.Abs
   ( Abs,
     Unsigned,
@@ -40,6 +42,11 @@ import "base" Prelude qualified as Base (abs)
 -- >>> import "base" Data.Ord ((<))
 -- >>> import "base" Prelude (maxBound, minBound)
 
+-- | Numeric types that have an absolute value. Unlike `Base.abs`, the result
+--   is in a type that can represent it without loss, which is generally /not/
+--   the type of the argument.
+--
+-- @since 0.0.1
 type Abs :: Type -> Constraint
 class (Real (Unsigned n)) => Abs n where
   -- | This type serves multiple purposes. Absolute values are natural numbers,
@@ -47,12 +54,18 @@ class (Real (Unsigned n)) => Abs n where
   --   of an integer. However, there are also cases (e.g., `Complex` numbers and
   --   vectors where `abs` can overflow the underlying type, and so we need a
   --  /wider/ type to contain the result).
+  --
+  -- @since 0.0.1
   type Unsigned n
 
   -- | The absolute value of @n@.
+  --
+  -- @since 0.0.1
   abs :: n -> Unsigned n
 
 -- | Returns  `Left` if we had to negate the value to get unsigned.
+--
+-- @since 0.0.1
 splitAbs :: (Abs a, Eq a, Widen (Unsigned a) a) => a -> Either (Unsigned a) (Unsigned a)
 splitAbs x =
   let a = abs x
@@ -66,6 +79,8 @@ splitAbs x =
 -- 128
 -- >>> abs (maxBound :: Int8)
 -- 127
+--
+-- @since 0.0.1
 instance Abs Int8 where
   type Unsigned Int8 = Word8
   abs = fromIntegral . Base.abs
@@ -77,6 +92,8 @@ instance Abs Int8 where
 -- True
 -- >>> widen (maxBound :: CFloat) < abs (maxBound :: Complex CFloat)
 -- True
+--
+-- @since 0.0.1
 instance Abs (Complex CFloat) where
   type Unsigned (Complex CFloat) = CDouble
   abs = magnitude . widen
@@ -88,6 +105,8 @@ instance Abs (Complex CFloat) where
 -- True
 -- >>> widen (maxBound :: Float) < abs (maxBound :: Complex Float)
 -- True
+--
+-- @since 0.0.1
 instance Abs (Complex Float) where
   type Unsigned (Complex Float) = Double
   abs = magnitude . widen
@@ -98,56 +117,93 @@ instance Abs (Complex Float) where
 -- 128
 -- >>> abs (maxBound :: CSChar)
 -- 127
+--
+-- @since 0.0.1
 instance Abs CSChar where
   type Unsigned CSChar = CUChar
   abs = fromIntegral . Base.abs
 
 -- | `CChar` isn’t always signed, but we always define this instance to allow
 --   for more portable code.
+--
+-- @since 0.0.1
 instance Abs CChar where
   type Unsigned CChar = CUChar
   abs = fromIntegral . Base.abs
 
+-- |
+--
+-- @since 0.0.1
 instance Abs Int16 where
   type Unsigned Int16 = Word16
   abs = fromIntegral . Base.abs
 
+-- |
+--
+-- @since 0.0.1
 instance Abs Int32 where
   type Unsigned Int32 = Word32
   abs = fromIntegral . Base.abs
 
+-- |
+--
+-- @since 0.0.1
 instance Abs Int64 where
   type Unsigned Int64 = Word64
   abs = fromIntegral . Base.abs
 
+-- |
+--
+-- @since 0.0.1
 instance Abs Int where
   type Unsigned Int = Word
   abs = fromIntegral . Base.abs
 
+-- |
+--
+-- @since 0.0.1
 instance Abs Integer where
   type Unsigned Integer = Natural
   abs = fromIntegral . Base.abs
 
+-- |
+--
+-- @since 0.0.1
 instance (Abs s, Integral (Unsigned s)) => Abs (Ratio s) where
   type Unsigned (Ratio s) = Ratio (Unsigned s)
   abs s = abs (numerator s) % abs (denominator s)
 
+-- |
+--
+-- @since 0.0.1
 instance (HasResolution n) => Abs (Fixed n) where
   type Unsigned (Fixed n) = Ratio Natural
   abs a@(MkFixed s) = abs s % abs (resolution a)
 
+-- |
+--
+-- @since 0.0.1
 instance (Functor f, Abs s, Real (Ap f (Unsigned s))) => Abs (Ap f s) where
   type Unsigned (Ap f s) = Ap f (Unsigned s)
   abs = fmap abs
 
+-- |
+--
+-- @since 0.0.1
 instance (Abs s) => Abs (Const s a) where
   type Unsigned (Const s a) = Unsigned s
   abs (Const s) = abs s
 
+-- |
+--
+-- @since 0.0.1
 instance (Abs s) => Abs (Identity s) where
   type Unsigned (Identity s) = Unsigned s
   abs (Identity a) = abs a
 
+-- |
+--
+-- @since 0.0.1
 instance (Abs s, Real (Op (Unsigned s) a)) => Abs (Op s a) where
   type Unsigned (Op s a) = Op (Unsigned s) a
   abs (Op fn) = Op $ abs . fn
